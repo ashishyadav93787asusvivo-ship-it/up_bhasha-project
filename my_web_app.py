@@ -19,8 +19,7 @@ query = st.text_input("Kuch bhi search karein ya puchiye:")
 if query:
     # 1. Data mein search
     st.write("### Data se jawab:")
-    search_result = df[df['sentence'].str.contains(query, case=False, na=False)]
-    
+        search_result = df[df['Local Sentence'].str.contains(query, case=False, na=False)]
     if not search_result.empty:
         st.dataframe(search_result)
     else:
