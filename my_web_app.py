@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
-import google.generativeai as genai  # Yeh 'as genai' likhna bahut zaruri hai
+import google.generativeai as genai
 
-# Apni key yahan daalein
+# Apni API Key yahan paste karo (quotes ke andar)
 API_KEY = "AIzaSyAf60yEbSbKg-DHtU0U-FRa2mlVFs4uOvw"
 genai.configure(api_key=API_KEY)
 
@@ -19,7 +19,9 @@ query = st.text_input("Kuch bhi search karein ya puchiye:")
 if query:
     # 1. Data mein search
     st.write("### Data se jawab:")
-        search_result = df[df['Local Sentence'].str.contains(query, case=False, na=False)]
+    # Yahan column ka naam 'Local Sentence' hai
+    search_result = df[df['Local Sentence'].str.contains(query, case=False, na=False)]
+    
     if not search_result.empty:
         st.dataframe(search_result)
     else:
