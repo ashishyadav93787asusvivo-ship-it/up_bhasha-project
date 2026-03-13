@@ -15,13 +15,31 @@ search_query = st.text_input("🔍 Yahan apna shabd likhein:")
 
 if st.button("Search Karein"):
     if search_query:
-        res = df[df['Local Sentence'].str.contains(search_query, case=False, na=False)]
-        
-        if not res.empty:
-            st.success(f"✅ {len(res)} results mile:")
-            # Table ko highlight karna
-            st.dataframe(res, use_container_width=True)
-        else:
-            st.error("❌ Nahi mila, kuch aur try kariye!")
+  import streamlit as st
+import pandas as pd
+import google.generativeai as genai
+
+# Yahan apni API Key paste karein
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+genai.configure(api_key=API_KEY)
+
+# Data load karein
+df = pd.read_csv("master_up_data.csv")
+
+st.title("AI-Powered UP Bhasha Search Engine")
+
+query = st.text_input("Kuch bhi search karein ya puchiye:")
+
+if query:
+    # 1. Pehle local data mein check karein
+    search_result = df[df['sentence'].str.contains(query, case=False, na=False)]
+    
+    if not search_result.empty:
+        st.write("### Data se jawab:")
+        st.dataframe(search_result)
     else:
-        st.warning("⚠️ Please pehle koi shabd type karein.")
+        # 2. Agar data mein nahi mila, toh AI se puchiye
+        st.write("### AI se jawab:")
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(f"User ka sawal hai: {query}. Iska jawab dein.")
+        st.write(response.text)
