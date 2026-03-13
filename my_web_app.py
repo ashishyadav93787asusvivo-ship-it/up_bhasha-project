@@ -3,7 +3,8 @@ import pandas as pd
 import google.generativeai
 
 # Apni key yahan daalein
-API_KEY = "AIzaSyBOkpcFnSIuykgFlg42NdDxpXd24O357k4"
+API_KEY = "AIzaSyAf60yEbSbKg-DHtu0U-FRa2m
+lVFs4uOvw"
 genai.configure(api_key=API_KEY)
 
 # Data load karein
