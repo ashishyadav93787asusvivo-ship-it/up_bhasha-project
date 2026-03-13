@@ -34,12 +34,36 @@ if query:
     # 1. Pehle local data mein check karein
     search_result = df[df['sentence'].str.contains(query, case=False, na=False)]
     
+    import streamlit as st
+import pandas as pd
+import google.generativeai as genai
+
+# Yahan apni asli API Key paste karein (AIza se shuru hone wali)
+API_KEY = " gen-lang-client-0289137108"
+genai.configure(api_key=API_KEY)
+
+# Data load karein
+try:
+    df = pd.read_csv("master_up_data.csv")
+except:
+    st.error("Error: 'master_up_data.csv' file nahi mil rahi hai.")
+
+st.title("AI-Powered UP Bhasha Search Engine")
+
+query = st.text_input("Kuch bhi search karein ya puchiye:")
+
+if query:
+    # 1. Data mein search karein
+    st.write("### Data se jawab:")
+    search_result = df[df['sentence'].str.contains(query, case=False, na=False)]
+    
     if not search_result.empty:
-        st.write("### Data se jawab:")
         st.dataframe(search_result)
     else:
-        # 2. Agar data mein nahi mila, toh AI se puchiye
-        st.write("### AI se jawab:")
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        response = model.generate_content(f"User ka sawal hai: {query}. Iska jawab dein.")
-        st.write(response.text)
+        st.write("Data mein koi match nahi mila.")
+    
+    # 2. AI se sawal puchiye
+    st.write("### AI ka jawab:")
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    response = model.generate_content(f"Aap ek assistant hain. User ka sawal hai: {query}. Iska sahi jawab dein.")
+    st.write(response.text)
