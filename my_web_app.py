@@ -3,14 +3,12 @@ import pandas as pd
 import google.generativeai as genai
 
 # Apni key yahan daalein
-API_KEY =
- "gen-lang-client-0289137108"
+API_KEY =   "AIzaSyBOkpcFnSIuykgFlg42NdDxpXd24O357k4"
 genai.configure(api_key=API_KEY)
 
 # Data load karein
 try:
-    df =
- pd.read_csv("master_up_data.csv")
+    df = pd.read_csv("master_up_data.csv")
 except:
     st.error("Error: 'master_up_data.csv' file nahi
  mili.")
