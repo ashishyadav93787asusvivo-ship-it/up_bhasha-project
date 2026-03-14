@@ -3,7 +3,7 @@ import pandas as pd
 import google.generativeai as genai
 
 # API Key
-genai.configure(api_key="AIzaSyCe3kHVefus4fA2ceWv7PvvK74vRifPZYk")
+genai.configure(api_key="")
 
 # 1. Model define karna
 model = genai.GenerativeModel('gemini-1.5-flash')
@@ -28,5 +28,6 @@ try:
             response = model.generate_content(f"Explain this in simple Hindi: {query}")
             st.write(response.text)
         except Exception as ai_err:
-            # Yahan hum asli error ko print karenge
-            st.error(f"DEBUG ERROR: {ai_err}")
+            st.write("AI ka server abhi busy hai, aapne data mein search kar liya hai.")
+except Exception as e:
+    st.error(f"Error: {e}")
