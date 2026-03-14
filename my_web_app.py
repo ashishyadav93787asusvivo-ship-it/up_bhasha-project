@@ -19,8 +19,9 @@ try:
             st.dataframe(match)
         
         # AI Jawab (Ab hum gemini-pro use kar rahe hain)
-        model = genai.GenerativeModel('gemini-pro')
-        response = model.generate_content(f"Sawal hai: {query}")
+        # Sabse stable model call
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(query)
         st.write(response.text)
 except Exception as e:
     st.error(f"Error: {e}")
