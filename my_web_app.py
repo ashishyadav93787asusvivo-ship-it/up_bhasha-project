@@ -1,17 +1,10 @@
 import streamlit as st
-import google.generativeai as genai
 
-# Streamlit secrets ka use karein (yahan key nahi likhni hai)
-genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+st.title("Test Mode: UP Bhasha")
+st.write("✅ Agar aapko yeh dikh raha hai, toh Streamlit sahi kaam kar raha hai!")
 
-model = genai.GenerativeModel('gemini-1.5-flash')
-
-st.title("UP Bhasha AI Search")
-query = st.text_input("Kuch puchiye:")
-
+query = st.text_input("Kuch likhiye:")
 if query:
-    try:
-        response = model.generate_content(f"Answer: {query}")
-        st.write(response.text)
-    except Exception as e:
-        st.error(f"Error: {e}")
+    st.write("---")
+    st.write(f"Aapne pucha: **{query}**")
+    st.write("✅ App ka structure sahi hai, ab hum AI wapas jod sakte hain!")
