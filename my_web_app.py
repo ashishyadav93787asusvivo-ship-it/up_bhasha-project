@@ -2,41 +2,39 @@ import streamlit as st
 import pandas as pd
 import google.generativeai as genai
 
-# API Key - Isse quotes ke andar hi rehne dein
+# 1. API Key Setup
 API_KEY = "AIzaSyCe3kHVefus4fA2ceWv7PvvK74vRifPZYk"
 genai.configure(api_key=API_KEY)
 
-# CSV Data Load karne ki koshish
+# 2. Data Load (CSV File)
 try:
     df = pd.read_csv("master_up_data.csv")
     data_loaded = True
 except Exception as e:
-    st.error(f"CSV Load nahi ho payi: {e}")
+    st.error(f"File load nahi hui: {e}")
     data_loaded = False
 
 st.title("UP Bhasha AI Search Engine")
-
-query = st.text_input("Apni bhasha mein kuch likhein (e.g., Ka bhay?):")
+query = st.text_input("Apni bhasha mein puchiye (e.g., Ka bhay?):")
 
 if query:
-    # 1. Excel Data mein search
-    st.subheader("Local Data se Khoja gaya:")
+    # --- Local Data mein Search ---
+    st.subheader("Data se jawab:")
     if data_loaded:
-        # 'Local Sentence' wahi naam hai jo aapne Excel mein dikhaya tha
-        match = df[df['Local Sentence'].str.contains(query, case=False, na=False)]
+        # Aapki file mein 'Local Sentence' column hai
+        search_result = df[df['Local Sentence'].str.contains(query, case=False, na=False)]
         
-        if not match.empty:
-            st.success("Humein data mein match mila!")
-            st.dataframe(match)
+        if not search_result.empty:
+            st.dataframe(search_result)
         else:
-            st.warning("Data mein match nahi mila, AI se jawab le rahe hain...")
-
-    # 2. Direct AI se Jawab
-    st.subheader("AI Assistant ka Jawab:")
+            st.write("Data mein match nahi mila.")
+    
+    # --- AI se jawab (Model change kiya hai) ---
+    st.subheader("AI ka jawab:")
     try:
+        # 'gemini-1.5-flash' ki jagah 'gemini-1.5-flash-latest' try karein
         model = genai.GenerativeModel('gemini-1.5-flash')
-        prompt = f"Aap UP ki bhashao ke expert hain. User ka sawal hai: '{query}'. Iska arth aur sahi jawab dein."
-        response = model.generate_content(prompt)
-        st.info(response.text)
+        response = model.generate_content(f"Aap UP ki bhashao ke expert hain. Sawal: {query}")
+        st.write(response.text)
     except Exception as e:
-        st.error(f"AI error: {e}")
+        st.error(f"AI Error: {e}")
