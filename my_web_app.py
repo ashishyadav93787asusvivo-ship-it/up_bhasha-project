@@ -9,7 +9,7 @@ API_KEY = "AIzaSyBV18ksORYbHlE2uUp3VOPi8N8Jr7IXL7A"
 
 try:
     genai.configure(api_key=API_KEY)
-    model =genai.GenerativeModel('gemini-pro')
+    model =genai.GenerativeModel('gemini-1.5-flash-002')
     
     query = st.text_input("Apni bhasha mein puchiye:")
     if query:
