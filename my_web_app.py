@@ -2,32 +2,26 @@ import streamlit as st
 import pandas as pd
 import google.generativeai as genai
 
-# API Key
-genai.configure(api_key="")
+st.title("Debug Mode: UP Bhasha")
 
-# 1. Model define karna
+# 1. API Setup
+API_KEY = "AIzaSyAf60yEbSbKg-DHtU0U-FRa2mlVFs4uOvw"
+genai.configure(api_key=API_KEY)
+st.write("Step 1: API Configuration Done.")
+
+# 2. Model Init
 model = genai.GenerativeModel('gemini-1.5-flash')
+st.write("Step 2: Model Initialized.")
 
-st.title("UP Bhasha AI Search")
+query = st.text_input("Kuch puchiye:")
 
-# CSV Load
-try:
-    df = pd.read_csv("master_up_data.csv")
-    query = st.text_input("Kuch puchiye:")
+if query:
+    st.write(f"Step 3: User ne pucha - {query}")
     
-    if query:
-        # CSV Search
-        match = df[df['Local Sentence'].str.contains(query, case=False, na=False)]
-        if not match.empty:
-            st.write("### Data se jawab:")
-            st.dataframe(match)
-        
-        # AI Answer - Naye tarike se call
-        st.write("### AI Assistant:")
-        try:
-            response = model.generate_content(f"Explain this in simple Hindi: {query}")
-            st.write(response.text)
-        except Exception as ai_err:
-            st.write("AI ka server abhi busy hai, aapne data mein search kar liya hai.")
-except Exception as e:
-    st.error(f"Error: {e}")
+    # 3. AI Call
+    try:
+        st.write("Step 4: AI se contact kar rahe hain...")
+        response = model.generate_content(f"Explain in Hindi: {query}")
+        st.write("AI Jawab:", response.text)
+    except Exception as e:
+        st.error(f"Step 4 ERROR: {e}")          
