@@ -3,7 +3,7 @@ import pandas as pd
 import google.generativeai as genai
 
 # API Key - Isse quotes ke andar hi rehne dein
-API_KEY = "AIzaSyAf60yEbSbKg-DHtU0U-FRa2mlVFs4uOvw"
+API_KEY = "AIzaSyCe3kHVefus4fA2ceWv7PvvK74vRifPZYk"
 genai.configure(api_key=API_KEY)
 
 # CSV Data Load karne ki koshish
