@@ -5,7 +5,7 @@ import google.generativeai as genai
 st.title("Debug Mode: UP Bhasha")
 
 # 1. API Setup
-API_KEY = "AIzaSyAf60yEbSbKg-DHtU0U-FRa2mlVFs4uOvw"
+API_KEY = "AIzaSyAjZO2CBWOr1rsFgT94LgfGgT3wVVFGcoo"
 genai.configure(api_key=API_KEY)
 st.write("Step 1: API Configuration Done.")
 
