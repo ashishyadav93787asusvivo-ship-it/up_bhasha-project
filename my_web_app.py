@@ -32,7 +32,7 @@ if query:
     # --- AI se jawab (Model change kiya hai) ---
     st.subheader("AI ka jawab:")
     try:
-        # 'gemini-1.5-flash' ki jagah 'gemini-1.5-flash-latest' try karein
+        # 'gemini-1.5-flash' ki jagah 'gemini-pro-latest' try karein
         model = genai.GenerativeModel('gemini-1.5-flash')
         response = model.generate_content(f"Aap UP ki bhashao ke expert hain. Sawal: {query}")
         st.write(response.text)
